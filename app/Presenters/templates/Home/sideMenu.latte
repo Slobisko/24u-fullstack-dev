@@ -1,13 +1,17 @@
 <nav class="side-menu" aria-label="Kategorie knih">
     <h2>Kategorie knih</h2>
 
+    <ul class="side-menu__all">
+        <li><a n:href="Home:default" n:class="!$activeCategory && !$categoryNotFound ? active">Všechny knihy</a></li>
+    </ul>
+
     {foreach $categories as $category}
     <section>
-        <h3>{$category['name']}</h3>
+        <h3><a n:href="Home:default, slug: $category['slug']" n:class="$activeCategory && $activeCategory->slug === $category['slug'] ? active">{$category['name']}</a></h3>
         {if $category['children']}
         <ul>
             {foreach $category['children'] as $child}
-            <li><a href="#">{$child->name}</a></li>
+            <li><a n:href="Home:default, slug: $child->slug" n:class="$activeCategory && $activeCategory->slug === $child->slug ? active">{$child->name}</a></li>
             {/foreach}
         </ul>
         {/if}

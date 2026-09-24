@@ -13,9 +13,26 @@ final class HomePresenter extends Presenter
         parent::__construct();
     }
 
-    public function renderDefault(): void
+    public function startup(): void
     {
-        $this->template->phpVersion = PHP_VERSION;
+        parent::startup();
+
+        if ($this->isAjax()) {
+            $this->setLayout(false);
+        }
+    }
+
+    public function renderDefault(?string $slug = null): void
+    {
+        $category = $slug !== null ? $this->databaseManager->getCategoryBySlug($slug) : null;
+
+        $this->template->activeCategory = $category;
+        $this->template->categoryNotFound = $slug !== null && $category === null;
+        $this->template->books = match (true) {
+            $category !== null => $this->databaseManager->getBooksByCategory($category),
+            $slug !== null => [],
+            default => $this->databaseManager->getBooks(),
+        };
     }
 
     protected function beforeRender(): void
@@ -41,6 +58,7 @@ final class HomePresenter extends Presenter
             if ($category->parent_id === null) {
                 $tree[] = [
                     'name' => $category->name,
+                    'slug' => $category->slug,
                     'children' => $childrenByParent[$category->id] ?? [],
                 ];
             }

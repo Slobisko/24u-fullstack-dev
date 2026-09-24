@@ -1,5 +1,36 @@
-{block title}Knihy{/block}
+{define title}{if $activeCategory}{$activeCategory->name}{else}Knihy{/if}{/define}
 
 {block content}
-a
+<h1>{if $activeCategory}{$activeCategory->name}{else}Všechny knihy{/if}</h1>
+
+{if $categoryNotFound}
+    <p>Kategorie nebyla nalezena.</p>
+{elseif !count($books)}
+    <p>V této kategorii zatím nejsou žádné knihy.</p>
+{else}
+<div class="book-grid">
+    {foreach $books as $book}
+    <article class="book-card">
+        <div class="book-card__cover">
+            {if $book->image_url}
+                <img src="{$book->image_url}" alt="Obálka knihy {$book->title}" loading="lazy">
+            {else}
+                <i class="bi bi-book"></i>
+            {/if}
+        </div>
+        <div class="book-card__body">
+            <h2 class="book-card__title">{$book->title}</h2>
+            <p class="book-card__author">{$book->author}</p>
+            <ul class="book-card__meta">
+                <li>{$book->published_year}</li>
+                {if $book->rating !== null}<li><i class="bi bi-star-fill book-card__rating-icon"></i> {$book->rating}</li>{/if}
+            </ul>
+            {if $book->annotation}
+            <p class="book-card__annotation">{$book->annotation|truncate:140}</p>
+            {/if}
+        </div>
+    </article>
+    {/foreach}
+</div>
+{/if}
 {/block}
