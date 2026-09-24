@@ -1,0 +1,23 @@
+{
+    "name": "u24/fullstack-dev",
+    "description": "Minimal Nette application running on PHP 8 and Apache",
+    "type": "project",
+    "require": {
+        "php": ">=8.1",
+        "nette/application": "^3.2",
+        "nette/bootstrap": "^3.2",
+        "latte/latte": "^3.0",
+        "tracy/tracy": "^2.10"
+    },
+    "autoload": {
+        "classmap": [
+            "app/"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        },
+        "sort-packages": true
+    }
+}

@@ -1,0 +1,8 @@
+application:
+    errorPresenter: Error
+
+session:
+    expiration: 14 days
+
+services:
+    router: RouterFactory::createRouter

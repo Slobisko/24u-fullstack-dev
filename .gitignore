@@ -1,0 +1,8 @@
+.idea/
+.vscode/
+/log/*
+/temp/*
+/vendor/
+
+!/log/.gitkeep
+!/temp/.gitkeep
