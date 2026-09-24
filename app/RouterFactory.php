@@ -12,7 +12,7 @@ final class RouterFactory
     {
         $router = new RouteList;
         $router->addRoute('kategorie/<slug>', 'Home:default');
-        $router->addRoute('<presenter>/<action>[/<id>]', 'Home:default');
+        $router->addRoute('<presenter>/<action>[/<slug>]', 'Home:default');
 
         return $router;
     }

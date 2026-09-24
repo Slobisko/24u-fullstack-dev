@@ -1,5 +1,6 @@
 application:
     errorPresenter: Error
+    mapping: App\Presentation\*\**Presenter
 
 session:
     expiration: 14 days

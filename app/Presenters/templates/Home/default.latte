@@ -18,7 +18,8 @@
 
 <div class="book-grid">
     {foreach $books as $book}
-    <article class="book-card">
+    {var $bookAuthors = $book->related('authors')->order('sort_order, id')}
+    <a n:href="Home:detail $book->slug" class="book-card" data-authors="{foreach $bookAuthors as $author}{$author->name}{sep}, {/sep}{/foreach}">
         <div class="book-card__cover">
             {if $book->image_url}
                 <img src="{$basePath}/assets/images/books/{$book->image_url}" alt="Obálka knihy {$book->title}" loading="lazy">
@@ -30,16 +31,16 @@
             {/if}
         </div>
         <div class="book-card__body">
-            <h2 class="book-card__title">{$book->title}</h2>
-            <p class="book-card__author">{$book->author}</p>
+            <h2 class="book-card__title">{$book->short_name ?? $book->title}</h2>
+            <p class="book-card__author">{foreach $bookAuthors as $author}{$author->name}{breakIf true}{/foreach}{if count($bookAuthors) > 1} et al.{/if}</p>
             <div class="book-card__footer">
                 {if $book->rating !== null}
-                <span><i class="bi bi-star-fill book-card__rating-icon"></i> {$book->rating}</span>
+                <span><i class="bi bi-star-fill book-card__rating-icon"></i> {$book->rating|number:1} ({$book->ratings_count})</span>
                 {/if}
                 <span>{$book->published_year}</span>
             </div>
         </div>
-    </article>
+    </a>
     {/foreach}
 </div>
 <p id="bookEmptyState" class="book-empty" hidden>Žádná kniha neodpovídá hledání.</p>

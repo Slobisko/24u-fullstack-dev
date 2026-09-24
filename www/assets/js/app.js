@@ -27,17 +27,27 @@
                 if (!response.ok) {
                     throw new Error('Request failed: ' + response.status);
                 }
-                return response.text();
-            })
-            .then(function (html) {
-                content.innerHTML = html;
-                setActiveLink(url);
 
-                if (pushState) {
-                    history.pushState({ url: url }, '', url);
+                var contentType = response.headers.get('Content-Type') || '';
+                if (contentType.indexOf('application/json') !== -1) {
+                    return response.json().then(function (data) {
+                        if (data && data.redirect) {
+                            return loadContent(data.redirect, pushState);
+                        }
+                        throw new Error('Unexpected JSON response');
+                    });
                 }
 
-                content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return response.text().then(function (html) {
+                    content.innerHTML = html;
+                    setActiveLink(response.url);
+
+                    if (pushState) {
+                        history.pushState({ url: response.url }, '', response.url);
+                    }
+
+                    content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
             })
             .catch(function () {
                 window.location.href = url;
@@ -51,7 +61,7 @@
 
         cards.forEach(function (card) {
             var title = card.querySelector('.book-card__title').textContent.toLowerCase();
-            var author = card.querySelector('.book-card__author').textContent.toLowerCase();
+            var author = (card.dataset.authors || card.querySelector('.book-card__author').textContent).toLowerCase();
             var matches = title.includes(normalized) || author.includes(normalized);
 
             card.hidden = !matches;
@@ -77,7 +87,7 @@
         }
     });
 
-    sideMenu.addEventListener('click', function (event) {
+    function handleNavClick(event) {
         var link = event.target.closest('a[href]');
 
         if (!link || event.defaultPrevented || event.button !== 0
@@ -87,9 +97,123 @@
 
         event.preventDefault();
         loadContent(link.getAttribute('href'), true);
-    });
+    }
+
+    sideMenu.addEventListener('click', handleNavClick);
+    content.addEventListener('click', handleNavClick);
 
     window.addEventListener('popstate', function () {
         loadContent(window.location.href, false);
+    });
+
+    var flashContainer = document.getElementById('flashMessages');
+
+    function showFlash(type, text) {
+        if (!flashContainer) {
+            return;
+        }
+
+        var flash = document.createElement('div');
+        flash.className = 'flash-message flash-message--' + type;
+        flash.textContent = text;
+        flashContainer.appendChild(flash);
+
+        setTimeout(function () {
+            flash.remove();
+        }, 5000);
+    }
+
+    function openReservationModal(modal) {
+        modal.hidden = false;
+
+        var firstField = modal.querySelector('input[name="first_name"]');
+        if (firstField) {
+            firstField.focus();
+        }
+    }
+
+    function closeReservationModal(modal) {
+        modal.hidden = true;
+    }
+
+    content.addEventListener('click', function (event) {
+        var openTrigger = event.target.closest('.js__reservation-open');
+        if (openTrigger) {
+            var modal = content.querySelector('.js__reservation-modal');
+            if (modal) {
+                openReservationModal(modal);
+            }
+            return;
+        }
+
+        var closeTrigger = event.target.closest(
+            '.js__reservation-close, .js__reservation-cancel, .js__reservation-backdrop'
+        );
+        if (closeTrigger) {
+            var modalToClose = closeTrigger.closest('.js__reservation-modal');
+            if (modalToClose) {
+                closeReservationModal(modalToClose);
+            }
+        }
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') {
+            return;
+        }
+
+        var openModal = content.querySelector('.js__reservation-modal:not([hidden])');
+        if (openModal) {
+            closeReservationModal(openModal);
+        }
+    });
+
+    content.addEventListener('submit', function (event) {
+        var form = event.target.closest('.js__reservation-form');
+        if (!form) {
+            return;
+        }
+
+        event.preventDefault();
+
+        var modal = form.closest('.js__reservation-modal');
+        var submitButton = form.querySelector('.js__reservation-submit');
+
+        submitButton.disabled = true;
+
+        fetch(form.getAttribute('action'), {
+            method: 'POST',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            body: new FormData(form),
+        })
+            .then(function (response) {
+                return response.json().then(function (data) {
+                    return { ok: response.ok, data: data };
+                });
+            })
+            .then(function (result) {
+                submitButton.disabled = false;
+
+                if (result.data && result.data.ok) {
+                    form.reset();
+
+                    if (modal) {
+                        closeReservationModal(modal);
+                    }
+
+                    showFlash('success', 'Rezervace byla úspěšně odeslána.');
+                } else {
+                    var errors = (result.data && result.data.errors) || {};
+                    var text = Object.keys(errors).map(function (key) {
+                        return errors[key];
+                    }).join(' ');
+
+                    showFlash('error', text || 'Rezervaci se nepodařilo odeslat.');
+                }
+            })
+            .catch(function () {
+                submitButton.disabled = false;
+                showFlash('error', 'Rezervaci se nepodařilo odeslat. Zkuste to prosím znovu.');
+            });
     });
 })();

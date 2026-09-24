@@ -1,0 +1,180 @@
+{define title}{$book->title}{/define}
+
+{block content}
+<a n:href="Home:default" class="book-detail__back"><i class="bi bi-arrow-left"></i> Zpět na seznam knih</a>
+
+<div class="book-detail">
+    <div class="book-detail__cover">
+        {if $book->image_url}
+            <img src="{$basePath}/assets/images/books/{$book->image_url}" alt="Obálka knihy {$book->title}">
+        {else}
+            <i class="bi bi-book"></i>
+        {/if}
+    </div>
+
+    <div class="book-detail__info">
+        {if $book->category}
+        <a n:href="Home:default, slug: $book->category->slug" class="book-detail__category">{$book->category->name}</a>
+        {/if}
+
+        <h1 class="book-detail__title">{$book->title}</h1>
+
+        {if count($authors)}
+        <p class="book-detail__authors">
+            {foreach $authors as $author}{$author->name}{sep}, {/sep}{/foreach}
+        </p>
+        {/if}
+
+        <div class="book-detail__rating-row">
+            {if $book->rating !== null}
+            <span class="rating-badge"><i class="bi bi-star-fill"></i> {$book->rating|number:1}</span>
+            {/if}
+            <span class="book-detail__rating-count">({$commentsCount} hodnocení)</span>
+        </div>
+
+        <dl class="book-detail__meta">
+            {if $book->published_year}
+            <div><dt>Rok vydání</dt><dd>{$book->published_year}</dd></div>
+            {/if}
+            {if $book->isbn}
+            <div><dt>ISBN</dt><dd>{$book->isbn}</dd></div>
+            {/if}
+        </dl>
+
+        <div class="book-detail__actions">
+            <button type="button" class="btn-reserve js__reservation-open">
+                <i class="bi bi-bookmark-check"></i> Zarezervovat
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="reservation-modal js__reservation-modal" hidden>
+    <div class="reservation-modal__backdrop js__reservation-backdrop"></div>
+    <div class="reservation-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="reservationModalTitle">
+        <button type="button" class="reservation-modal__close js__reservation-close" aria-label="Zavřít">
+            <i class="bi bi-x-lg"></i>
+        </button>
+
+        <h2 id="reservationModalTitle" class="reservation-modal__title">Zarezervovat knihu</h2>
+        <p class="reservation-modal__subtitle">{$book->title}</p>
+
+        <form class="js__reservation-form" method="post" action="{link Home:reserve}" novalidate>
+            <input type="hidden" name="book_slug" value="{$book->slug}">
+
+            <label class="reservation-modal__field">
+                Jméno
+                <input type="text" name="first_name" autocomplete="given-name" required>
+            </label>
+
+            <label class="reservation-modal__field">
+                Příjmení
+                <input type="text" name="last_name" autocomplete="family-name" required>
+            </label>
+
+            <label class="reservation-modal__field">
+                E-mail
+                <input type="email" name="email" autocomplete="email" required>
+            </label>
+
+            <label class="reservation-modal__field">
+                Poznámka (nepovinné)
+                <textarea name="note" rows="3"></textarea>
+            </label>
+
+            <div class="reservation-modal__buttons">
+                <button type="button" class="btn-secondary js__reservation-cancel">Zrušit</button>
+                <button type="submit" class="btn-reserve js__reservation-submit">Odeslat rezervaci</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="book-tabs">
+    <input type="radio" name="book-tab" id="tab-overview" class="book-tabs__radio" checked>
+    <input type="radio" name="book-tab" id="tab-comments" class="book-tabs__radio">
+    <input type="radio" name="book-tab" id="tab-rating" class="book-tabs__radio">
+    <input type="radio" name="book-tab" id="tab-trivia" class="book-tabs__radio">
+
+    <div class="book-tabs__nav">
+        <label for="tab-overview" class="book-tabs__label book-tabs__label--overview">Přehled</label>
+        <label for="tab-comments" class="book-tabs__label book-tabs__label--comments">Komentáře <span class="book-tabs__count">{$commentsCount}</span></label>
+        <label for="tab-rating" class="book-tabs__label book-tabs__label--rating">Hodnocení</label>
+        <label for="tab-trivia" class="book-tabs__label book-tabs__label--trivia">Zajímavosti</label>
+    </div>
+
+    <div class="book-tabs__panel book-tabs__panel--overview">
+        {if $book->annotation}
+        <p>{$book->annotation}</p>
+        {else}
+        <p class="book-empty">U této knihy zatím není žádný popis.</p>
+        {/if}
+
+        <dl class="book-detail__meta book-detail__meta--full">
+            {if count($authors)}
+            <div><dt>{count($authors) > 1 ? 'Autoři' : 'Autor'}</dt><dd>{foreach $authors as $author}{$author->name}{sep}, {/sep}{/foreach}</dd></div>
+            {/if}
+            {if $book->category}
+            <div><dt>Kategorie</dt><dd>{$book->category->name}</dd></div>
+            {/if}
+            {if $book->published_year}
+            <div><dt>Rok vydání</dt><dd>{$book->published_year}</dd></div>
+            {/if}
+            {if $book->isbn}
+            <div><dt>ISBN</dt><dd>{$book->isbn}</dd></div>
+            {/if}
+        </dl>
+    </div>
+
+    <div class="book-tabs__panel book-tabs__panel--comments">
+        {if $commentsCount === 0}
+        <p class="book-empty">Zatím žádné komentáře.</p>
+        {else}
+        <ul class="comment-list">
+            {foreach $comments as $comment}
+            <li class="comment">
+                <div class="comment__header">
+                    <span class="comment__author">{$comment->author_name}</span>
+                    {if $comment->rating !== null}
+                    <span class="comment__rating"><i class="bi bi-star-fill"></i> {$comment->rating}</span>
+                    {/if}
+                    <span class="comment__date">{$comment->created_at|date:'d.m.Y'}</span>
+                </div>
+                <p class="comment__text">{$comment->content}</p>
+            </li>
+            {/foreach}
+        </ul>
+        {/if}
+    </div>
+
+    <div class="book-tabs__panel book-tabs__panel--rating">
+        {if $commentsCount === 0}
+        <p class="book-empty">Kniha zatím nemá žádné hodnocení.</p>
+        {else}
+        <div class="rating-summary">
+            {if $book->rating !== null}
+            <span class="rating-summary__value">{$book->rating|number:1}</span>
+            {/if}
+            <span class="rating-summary__count">na základě {$commentsCount} hodnocení</span>
+        </div>
+
+        <div class="rating-bars">
+            {foreach [5, 4, 3, 2, 1] as $stars}
+            {var $starCount = $ratingBreakdown[$stars]}
+            <div class="rating-bar">
+                <span class="rating-bar__label">{$stars} <i class="bi bi-star-fill"></i></span>
+                <span class="rating-bar__track">
+                    <span class="rating-bar__fill" style="width: {round(($starCount / max($commentsCount, 1)) * 100)}%"></span>
+                </span>
+                <span class="rating-bar__count">{$starCount}</span>
+            </div>
+            {/foreach}
+        </div>
+        {/if}
+    </div>
+
+    <div class="book-tabs__panel book-tabs__panel--trivia">
+        <p class="book-empty">U této knihy zatím nejsou žádné zajímavosti.</p>
+    </div>
+</div>
+{/block}
