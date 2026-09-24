@@ -1,0 +1,11 @@
+{
+    "name": "u24-fullstack-dev",
+    "private": true,
+    "scripts": {
+        "build:css": "sass assets/scss/style.scss:www/assets/css/style.css --no-source-map --style=expanded",
+        "watch:css": "sass --watch assets/scss/style.scss:www/assets/css/style.css --no-source-map --style=expanded"
+    },
+    "devDependencies": {
+        "sass": "^1.77.0"
+    }
+}

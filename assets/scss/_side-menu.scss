@@ -1,0 +1,47 @@
+@use 'variables' as *;
+
+.side-menu {
+    padding: 1.25rem;
+    background: $color-white;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+
+    h2,
+    h3 {
+        margin-top: 0;
+    }
+
+    section + section {
+        margin-top: 1.5rem;
+    }
+
+    ul {
+        margin: 0;
+        padding-left: 1.1rem;
+
+        &.side-menu__all {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem;
+        }
+    }
+
+    li + li {
+        margin-top: .35rem;
+    }
+
+    a {
+        color: $color-primary;
+        text-decoration: none;
+
+        &:hover,
+        &:focus-visible {
+            text-decoration: underline;
+        }
+
+        &.active {
+            font-weight: 600;
+            text-decoration: underline;
+        }
+    }
+}

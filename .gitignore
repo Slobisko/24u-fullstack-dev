@@ -3,6 +3,7 @@
 /log/*
 /temp/*
 /vendor/
+/node_modules/
 
 !/log/.gitkeep
 !/temp/.gitkeep

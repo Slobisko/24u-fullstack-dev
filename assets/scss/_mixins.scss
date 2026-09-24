@@ -1,0 +1,16 @@
+@use 'variables' as *;
+
+@mixin focus-ring($color: $color-primary, $offset: 1px) {
+    outline: 2px solid $color;
+    outline-offset: $offset;
+}
+
+@mixin button-base {
+    padding: .65rem 1.25rem;
+    border-radius: $radius-md;
+    font: inherit;
+    font-weight: 600;
+    font-size: .95rem;
+    cursor: pointer;
+    transition: background-color .15s ease;
+}

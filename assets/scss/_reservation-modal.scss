@@ -1,0 +1,105 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.book-detail__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.reservation-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+
+    &[hidden] {
+        display: none;
+    }
+
+    &__backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(15, 23, 42, .55);
+    }
+
+    &__dialog {
+        position: relative;
+        width: 100%;
+        max-width: 420px;
+        max-height: 90vh;
+        overflow-y: auto;
+        background: $color-white;
+        border-radius: $radius-lg;
+        padding: 1.75rem;
+        box-shadow: 0 20px 45px rgba(15, 23, 42, .25);
+    }
+
+    &__close {
+        position: absolute;
+        top: .85rem;
+        right: .85rem;
+        width: 2rem;
+        height: 2rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        border-radius: $radius-sm;
+        color: $color-muted;
+        cursor: pointer;
+
+        &:hover,
+        &:focus-visible {
+            background: $color-border-light;
+            color: $color-text;
+        }
+    }
+
+    &__title {
+        margin: 0 0 .25rem;
+        font-family: $font-serif;
+        font-size: 1.4rem;
+    }
+
+    &__subtitle {
+        margin: 0 0 1.25rem;
+        color: $color-muted;
+    }
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        gap: .35rem;
+        margin-bottom: 1rem;
+        font-size: .85rem;
+        font-weight: 600;
+        color: $color-text-secondary;
+
+        input,
+        textarea {
+            padding: .55rem .7rem;
+            border: 1px solid $color-border;
+            border-radius: $radius-md;
+            font: inherit;
+            font-weight: 400;
+            color: $color-text;
+            resize: vertical;
+
+            &:focus-visible {
+                @include focus-ring;
+            }
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: .75rem;
+        margin-top: 1.25rem;
+    }
+}

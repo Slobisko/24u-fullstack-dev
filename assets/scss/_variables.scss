@@ -1,0 +1,41 @@
+// Colors
+$color-text: #202124;
+$color-text-secondary: #4d5560;
+$color-text-body: #37404b;
+$color-muted: #6b7280;
+$color-muted-light: #9aa1ab;
+$color-bg: #f5f6f8;
+$color-white: #fff;
+$color-border: #dfe3e8;
+$color-border-light: #eef0f3;
+$color-placeholder-icon: #b7bcc4;
+$color-comment-bg: #fafbfc;
+
+$color-primary: #245b8f;
+$color-primary-hover: #1c4972;
+$color-primary-tint: #eaf1f8;
+$color-primary-tint-hover: #dbe8f4;
+
+$color-gold: #f5b301;
+$color-gold-tint: #fff7e0;
+$color-gold-text: #8a6100;
+
+$color-success-bg: #e8f5e9;
+$color-success-text: #1e7a33;
+$color-error-bg: #fdecea;
+$color-error-text: #b3212e;
+
+// Typography
+$font-base: system-ui, sans-serif;
+$font-serif: Georgia, 'Times New Roman', serif;
+
+// Radius
+$radius-sm: 6px;
+$radius-md: 8px;
+$radius-lg: 10px;
+$radius-pill: 999px;
+
+// Breakpoints
+$breakpoint-tablet: 760px;
+$breakpoint-mobile: 640px;
+$breakpoint-small: 480px;

@@ -1,0 +1,54 @@
+@use 'variables' as *;
+
+.comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.comment {
+    padding: 1rem;
+    background: $color-comment-bg;
+    border: 1px solid $color-border-light;
+    border-radius: $radius-md;
+
+    &__header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: .75rem;
+        margin-bottom: .4rem;
+    }
+
+    &__author {
+        font-weight: 700;
+    }
+
+    &__rating {
+        display: inline-flex;
+        align-items: center;
+        gap: .25rem;
+        color: $color-gold-text;
+        font-weight: 600;
+        font-size: .85rem;
+
+        i {
+            color: $color-gold;
+        }
+    }
+
+    &__date {
+        margin-left: auto;
+        color: $color-muted-light;
+        font-size: .8rem;
+    }
+
+    &__text {
+        margin: 0;
+        color: $color-text-body;
+        line-height: 1.55;
+    }
+}

@@ -1,0 +1,37 @@
+@use 'variables' as *;
+
+:root {
+    font-family: $font-base;
+    color: $color-text;
+    background: $color-bg;
+}
+
+body {
+    margin: 0;
+}
+
+.page-shell {
+    display: grid;
+    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+    gap: 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 2rem;
+
+    @media (max-width: $breakpoint-tablet) {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+}
+
+.page-content {
+    min-width: 0;
+    padding: 1.5rem;
+    background: $color-white;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+
+    h1 {
+        margin-top: 0;
+    }
+}

@@ -1,0 +1,65 @@
+@use 'variables' as *;
+
+.rating-summary {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: .6rem;
+    margin-bottom: 1.25rem;
+
+    &__value {
+        font-family: $font-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+
+    &__count {
+        color: $color-muted;
+    }
+}
+
+.rating-bars {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.rating-bar {
+    display: grid;
+    grid-template-columns: 3.2rem 1fr 2rem;
+    align-items: center;
+    gap: .6rem;
+    font-size: .85rem;
+    color: $color-text-secondary;
+
+    &__label {
+        display: inline-flex;
+        align-items: center;
+        gap: .25rem;
+
+        i {
+            color: $color-gold;
+        }
+    }
+
+    &__track {
+        height: .5rem;
+        overflow: hidden;
+        background: $color-border-light;
+        border-radius: $radius-pill;
+    }
+
+    &__fill {
+        display: block;
+        height: 100%;
+        background: $color-gold;
+        border-radius: $radius-pill;
+    }
+
+    &__count {
+        text-align: right;
+        color: $color-muted-light;
+    }
+}

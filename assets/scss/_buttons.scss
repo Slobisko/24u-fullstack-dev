@@ -1,0 +1,34 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.btn-reserve {
+    @include button-base;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: $color-primary;
+    color: $color-white;
+    border: none;
+
+    &:hover,
+    &:focus-visible {
+        background: $color-primary-hover;
+    }
+
+    &:disabled {
+        background: $color-muted-light;
+        cursor: default;
+    }
+}
+
+.btn-secondary {
+    @include button-base;
+    background: $color-white;
+    color: $color-text-secondary;
+    border: 1px solid $color-border;
+
+    &:hover,
+    &:focus-visible {
+        background: $color-bg;
+    }
+}
