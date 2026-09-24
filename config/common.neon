@@ -6,3 +6,8 @@ session:
 
 services:
     router: RouterFactory::createRouter
+
+database:
+    dsn: 'mysql:host=host.docker.internal;port=3306;dbname=book_management'
+    user: root
+    password: ''

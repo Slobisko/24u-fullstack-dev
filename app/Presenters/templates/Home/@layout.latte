@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="cs">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{ifset title}{include title|stripHtml}{else}Evidence knih{/ifset}</title>
+	<link rel="stylesheet" href="{$basePath}/assets/css/style.css">
+</head>
+<body>
+	<div class="page-shell">
+		<aside>
+			{include sideMenu.latte}
+		</aside>
+		<main class="page-content">
+			{include content}
+		</main>
+	</div>
+</body>
+</html>
