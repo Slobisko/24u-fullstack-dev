@@ -44,6 +44,39 @@
             });
     }
 
+    function filterBooks(query) {
+        var normalized = query.trim().toLowerCase();
+        var cards = content.querySelectorAll('.book-card');
+        var visible = 0;
+
+        cards.forEach(function (card) {
+            var title = card.querySelector('.book-card__title').textContent.toLowerCase();
+            var author = card.querySelector('.book-card__author').textContent.toLowerCase();
+            var matches = title.includes(normalized) || author.includes(normalized);
+
+            card.hidden = !matches;
+            if (matches) {
+                visible++;
+            }
+        });
+
+        var counter = content.querySelector('#bookCount');
+        if (counter) {
+            counter.textContent = visible;
+        }
+
+        var emptyState = content.querySelector('#bookEmptyState');
+        if (emptyState) {
+            emptyState.hidden = visible !== 0;
+        }
+    }
+
+    content.addEventListener('input', function (event) {
+        if (event.target.id === 'bookSearch') {
+            filterBooks(event.target.value);
+        }
+    });
+
     sideMenu.addEventListener('click', function (event) {
         var link = event.target.closest('a[href]');
 
