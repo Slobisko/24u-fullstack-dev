@@ -38,6 +38,16 @@ final class DatabaseManager
         return $this->withRating($this->database->table('books')->where('category_id', $categoryIds))->order('title');
     }
 
+    public function getBookById(int $id)
+    {
+        return $this->database->table('books')->get($id);
+    }
+
+    public function deleteBook(ActiveRow $book): void
+    {
+        $book->delete();
+    }
+
     public function getBookBySlug(string $slug)
     {
         return $this->withRating($this->database->table('books')->where('slug', $slug))->fetch();

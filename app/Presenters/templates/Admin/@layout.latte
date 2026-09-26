@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="cs">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="noindex">
+	<title>{ifset title}{include title|stripHtml} – {/ifset}Administrace</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<link rel="stylesheet" href="{$basePath}/assets/css/style.css">
+</head>
+<body>
+	<div class="flash-container" aria-live="polite">
+		<div n:foreach="$flashes as $flash" class="flash-message flash-message--{$flash->type}">{$flash->message}</div>
+	</div>
+
+	{if $user->isLoggedIn()}
+	<header class="admin-header">
+		<a n:href="Admin:default" class="admin-header__brand">Administrace</a>
+		<nav class="admin-header__menu" aria-label="Administrace">
+			<a n:href="Admin:books" n:class="$presenter->isLinkCurrent('Admin:books') ? active"><i class="bi bi-journal-text"></i> Správa knih</a>
+			<a n:href="Admin:import" n:class="$presenter->isLinkCurrent('Admin:import') ? active"><i class="bi bi-upload"></i> Import knih</a>
+		</nav>
+		<nav class="admin-header__nav">
+			<a n:href="Home:default"><i class="bi bi-box-arrow-up-right"></i> Veřejná část</a>
+			<span class="admin-header__user"><i class="bi bi-person-circle"></i> {$user->getId()}</span>
+			<a n:href="Admin:logout"><i class="bi bi-box-arrow-right"></i> Odhlásit se</a>
+		</nav>
+	</header>
+	{/if}
+
+	<main class="admin-content">
+		{include content}
+	</main>
+</body>
+</html>

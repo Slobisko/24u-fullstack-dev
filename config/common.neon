@@ -5,6 +5,10 @@ application:
 session:
     expiration: 14 days
 
+security:
+    users:
+        admin: admin
+
 services:
     router: RouterFactory::createRouter
     databaseManager: App\Model\DatabaseManager

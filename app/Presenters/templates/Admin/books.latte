@@ -1,0 +1,45 @@
+{define title}Správa knih{/define}
+
+{block content}
+<div class="admin-page-header">
+    <h1>Správa knih</h1>
+    <p class="book-count">Celkem <strong>{count($books)}</strong> knih</p>
+</div>
+
+{if !count($books)}
+    <p class="book-empty">Zatím zde nejsou žádné knihy.</p>
+{else}
+<div class="admin-table-wrap">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Název</th>
+                <th>Autoři</th>
+                <th>Kategorie</th>
+                <th class="admin-table__num">Rok vydání</th>
+                <th class="admin-table__num">Hodnocení</th>
+                <th class="admin-table__actions">Možnosti</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach $books as $book}
+            <tr>
+                <td><a n:href="Home:detail $book->slug" target="_blank">{$book->title}</a></td>
+                <td>{foreach $book->related('authors')->order('sort_order, id') as $author}{$author->name}{sep}, {/sep}{/foreach}</td>
+                <td>{$book->category?->name}</td>
+                <td class="admin-table__num">{$book->published_year}</td>
+                <td class="admin-table__num">
+                    {if $book->rating !== null}<i class="bi bi-star-fill admin-table__star"></i> {$book->rating|number:1}{else}–{/if}
+                </td>
+                <td class="admin-table__actions">
+                    <form method="post" action="{link deleteBook!, id: $book->id}" onsubmit="return confirm({='Opravdu odstranit knihu „' . $book->title . '“? Smažou se i její autoři, hodnocení a rezervace.'})">
+                        <button type="submit" class="btn-danger" title="Odstranit knihu"><i class="bi bi-trash"></i> Odstranit</button>
+                    </form>
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+</div>
+{/if}
+{/block}

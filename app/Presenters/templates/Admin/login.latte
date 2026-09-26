@@ -1,0 +1,27 @@
+{define title}Přihlášení{/define}
+
+{block content}
+<div class="admin-login">
+    <h1><i class="bi bi-shield-lock"></i> Přihlášení do administrace</h1>
+
+    <form n:name="loginForm" class="admin-form">
+        <ul n:ifcontent class="admin-form__errors" role="alert">
+            <li n:foreach="$form->getOwnErrors() as $error">{$error}</li>
+        </ul>
+
+        <div class="admin-form__field">
+            <label n:name="username" />
+            <input n:name="username">
+        </div>
+
+        <div class="admin-form__field">
+            <label n:name="password" />
+            <input n:name="password">
+        </div>
+
+        <button n:name="send" class="btn-reserve admin-form__submit"><i class="bi bi-box-arrow-in-right"></i> Přihlásit se</button>
+    </form>
+
+    <a n:href="Home:default" class="admin-login__back"><i class="bi bi-arrow-left"></i> Zpět na veřejnou část</a>
+</div>
+{/block}
