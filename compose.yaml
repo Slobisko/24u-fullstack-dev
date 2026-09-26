@@ -3,8 +3,6 @@ services:
     build:
       context: .
     restart: unless-stopped
-    extra_hosts:
-      - "host.docker.internal:172.24.160.1"
     ports:
       - "8080:80"
     volumes:
