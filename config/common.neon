@@ -12,6 +12,7 @@ security:
 services:
     router: RouterFactory::createRouter
     databaseManager: App\Model\DatabaseManager
+    bookImageStorage: App\Model\BookImageStorage(%wwwDir%/assets/images/books)
 
 database:
     dsn: 'mysql:host=host.docker.internal;port=3306;dbname=book_management'

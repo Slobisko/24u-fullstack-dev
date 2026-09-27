@@ -2,22 +2,39 @@
 
 {block content}
 <div class="admin-page-header">
-    <h1>Správa knih</h1>
-    <p class="book-count">Celkem <strong>{count($books)}</strong> knih</p>
+    <div>
+        <h1>Správa knih</h1>
+        <p class="book-count" n:snippet="count">{if $query !== ''}Nalezeno{else}Celkem{/if} <strong>{count($books)}</strong> knih</p>
+    </div>
+    <a n:href="Admin:add" class="btn-reserve"><i class="bi bi-plus-lg"></i> Přidat knihu</a>
 </div>
 
-{if !count($books)}
+<form action={link Admin:books, q: null} method="get" class="admin-search js__admin-search" role="search">
+    <div class="book-search">
+        <i class="bi bi-search"></i>
+        <input type="search" name="q" value={$query} placeholder="Hledat podle názvu, krátkého názvu, autora nebo ISBN…" aria-label="Hledat knihy">
+    </div>
+    <input n:if="!$isDefaultOrder" type="hidden" name="sort" value={$sort}>
+    <input n:if="!$isDefaultOrder" type="hidden" name="dir" value={$dir}>
+    <button type="submit" class="btn-secondary js__search-submit">Hledat</button>
+    <a n:href="this, q: null" class="admin-search__clear js__search-clear" hidden={$query === ''}><i class="bi bi-x-lg"></i> Zrušit hledání</a>
+</form>
+
+<div n:snippet="books">
+{if !count($books) && $query !== ''}
+    <p class="book-empty">Žádná kniha neodpovídá hledání „{$query}“.</p>
+{elseif !count($books)}
     <p class="book-empty">Zatím zde nejsou žádné knihy.</p>
 {else}
 <div class="admin-table-wrap">
     <table class="admin-table">
         <thead>
             <tr>
-                <th>Název</th>
-                <th>Autoři</th>
-                <th>Kategorie</th>
-                <th class="admin-table__num">Rok vydání</th>
-                <th class="admin-table__num">Hodnocení</th>
+                {include sortableHeader, key: 'title', label: 'Název'}
+                {include sortableHeader, key: 'authors', label: 'Autoři'}
+                {include sortableHeader, key: 'category', label: 'Kategorie'}
+                {include sortableHeader, key: 'year', label: 'Rok vydání', class: 'admin-table__num'}
+                {include sortableHeader, key: 'rating', label: 'Hodnocení', class: 'admin-table__num'}
                 <th class="admin-table__actions">Možnosti</th>
             </tr>
         </thead>
@@ -32,9 +49,12 @@
                     {if $book->rating !== null}<i class="bi bi-star-fill admin-table__star"></i> {$book->rating|number:1}{else}–{/if}
                 </td>
                 <td class="admin-table__actions">
-                    <form method="post" action="{link deleteBook!, id: $book->id}" onsubmit="return confirm({='Opravdu odstranit knihu „' . $book->title . '“? Smažou se i její autoři, hodnocení a rezervace.'})">
-                        <button type="submit" class="btn-danger" title="Odstranit knihu"><i class="bi bi-trash"></i> Odstranit</button>
-                    </form>
+                    <div class="admin-table__buttons">
+                        <a n:href="Admin:edit $book->id" class="btn-small"><i class="bi bi-pencil"></i> Upravit</a>
+                        <form method="post" action="{link deleteBook!, id: $book->id}" onsubmit="return confirm({='Opravdu odstranit knihu „' . $book->title . '“? Smažou se i její autoři, hodnocení a rezervace.'})">
+                            <button type="submit" class="btn-danger" title="Odstranit knihu"><i class="bi bi-trash"></i> Odstranit</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
             {/foreach}
@@ -42,4 +62,20 @@
     </table>
 </div>
 {/if}
+</div>
 {/block}
+
+{* Column header; clickable for sorting only when the column is listed in AdminPresenter::BookSortColumns. *}
+{define sortableHeader, string $key, string $label, ?string $class = null}
+{if in_array($key, $sortableColumns, true)}
+    {var $isActive = $sort === $key}
+    <th class={$class} aria-sort={$isActive ? ($dir === 'asc' ? 'ascending' : 'descending') : 'none'}>
+        <a n:href="this, sort: $key, dir: ($isActive && $dir === 'asc' ? 'desc' : 'asc')" n:class="admin-table__sort, js__sort-link, $isActive ? active">
+            {$label}
+            <i class="bi {$isActive ? ($dir === 'asc' ? 'bi-caret-up-fill' : 'bi-caret-down-fill') : 'bi-arrow-down-up'}" aria-hidden="true"></i>
+        </a>
+    </th>
+{else}
+    <th class={$class}>{$label}</th>
+{/if}
+{/define}

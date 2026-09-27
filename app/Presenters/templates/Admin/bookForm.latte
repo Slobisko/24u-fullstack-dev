@@ -1,0 +1,83 @@
+{define title}{if $book}Upravit knihu{else}Přidat knihu{/if}{/define}
+
+{block content}
+<a n:href="Admin:books" class="book-detail__back"><i class="bi bi-arrow-left"></i> Zpět na správu knih</a>
+
+<h1>{if $book}Upravit knihu „{$book->title}“{else}Přidat knihu{/if}</h1>
+
+<form n:name="bookForm" class="admin-form book-form">
+    <ul n:ifcontent class="admin-form__errors" role="alert">
+        <li n:foreach="$form->getOwnErrors() as $error">{$error}</li>
+    </ul>
+
+    <div class="book-form__layout">
+        <div class="book-form__fields">
+            <div class="admin-form__field">
+                <label n:name="title">Název <span class="admin-form__required">*</span></label>
+                <input n:name="title">
+                <p class="admin-form__error" n:ifcontent>{inputError title}</p>
+            </div>
+
+            <div class="admin-form__field">
+                <label n:name="short_name" />
+                <input n:name="short_name">
+                <p class="admin-form__hint">Nepovinné. Zobrazí se na kartě knihy místo celého názvu.</p>
+                <p class="admin-form__error" n:ifcontent>{inputError short_name}</p>
+            </div>
+
+            <div class="admin-form__field">
+                <label n:name="authors">Autoři <span class="admin-form__required">*</span></label>
+                <input n:name="authors">
+                <p class="admin-form__hint">Více autorů oddělte čárkou.</p>
+                <p class="admin-form__error" n:ifcontent>{inputError authors}</p>
+            </div>
+
+            <div class="admin-form__row">
+                <div class="admin-form__field">
+                    <label n:name="category_id" />
+                    <select n:name="category_id"></select>
+                    <p class="admin-form__error" n:ifcontent>{inputError category_id}</p>
+                </div>
+
+                <div class="admin-form__field">
+                    <label n:name="published_year">Rok vydání <span class="admin-form__required">*</span></label>
+                    <input n:name="published_year">
+                    <p class="admin-form__error" n:ifcontent>{inputError published_year}</p>
+                </div>
+
+                <div class="admin-form__field">
+                    <label n:name="isbn" />
+                    <input n:name="isbn">
+                    <p class="admin-form__error" n:ifcontent>{inputError isbn}</p>
+                </div>
+            </div>
+
+            <div class="admin-form__field">
+                <label n:name="annotation" />
+                <textarea n:name="annotation"></textarea>
+                <p class="admin-form__error" n:ifcontent>{inputError annotation}</p>
+            </div>
+        </div>
+
+        <div class="book-form__cover">
+            {var $coverUrl = $book?->image_url ? $basePath . '/assets/images/books/' . $book->image_url : null}
+            <span class="admin-form__label">Obálka</span>
+            <div class="book-form__preview">
+                <img src={$coverUrl} alt="Náhled obálky" class="js__cover-preview" hidden={!$coverUrl}>
+                <i class="bi bi-image js__cover-placeholder" hidden={(bool) $coverUrl}></i>
+            </div>
+            <label class="btn-secondary book-form__upload">
+                <i class="bi bi-upload"></i> {if $coverUrl}Nahrát jinou obálku{else}Nahrát obálku{/if}
+                <input n:name="image" class="js__cover-input">
+            </label>
+            <p class="admin-form__hint js__cover-name">JPG nebo PNG, nejvýše 2 MB.</p>
+            <p class="admin-form__error" n:ifcontent>{inputError image}</p>
+        </div>
+    </div>
+
+    <div class="book-form__actions">
+        <button n:name="send" class="btn-reserve"><i class="bi bi-check-lg"></i> {$form['send']->getCaption()}</button>
+        <a n:href="Admin:books" class="btn-secondary">Zrušit</a>
+    </div>
+</form>
+{/block}

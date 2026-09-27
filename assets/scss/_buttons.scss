@@ -50,3 +50,27 @@
         border-color: $color-error-text;
     }
 }
+
+.btn-small {
+    @include button-base;
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .4rem .8rem;
+    font-size: .85rem;
+    background: $color-white;
+    color: $color-primary;
+    border: 1px solid $color-border;
+
+    &:hover,
+    &:focus-visible {
+        background: $color-primary-tint;
+        border-color: $color-primary;
+    }
+}
+
+a.btn-reserve,
+a.btn-secondary,
+a.btn-small {
+    text-decoration: none;
+}
