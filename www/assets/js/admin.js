@@ -1,7 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
+    initFlashMessages();
     initCoverPreview();
     initBookSearch();
 });
+
+function initFlashMessages() {
+    document.querySelectorAll('.flash-message').forEach(function (flash) {
+        setTimeout(function () {
+            flash.remove();
+        }, 5000);
+    });
+}
 
 function initCoverPreview() {
     var coverInput = document.querySelector('.js__cover-input');
