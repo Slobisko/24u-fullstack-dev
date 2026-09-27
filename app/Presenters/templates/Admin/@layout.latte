@@ -4,7 +4,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="robots" content="noindex">
-	<title>{ifset title}{include title|stripHtml} – {/ifset}Administrace</title>
+	<title>{ifset title}{include title|stripHtml} – {/ifset}Administrace – Shelfie</title>
+	<link rel="icon" href="{$basePath}/assets/images/logo.svg" type="image/svg+xml">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 	<link rel="stylesheet" href="{$basePath}/assets/css/style.css">
 	<script defer src="{$basePath}/assets/js/admin.js"></script>
@@ -14,20 +15,37 @@
 		<div n:foreach="$flashes as $flash" class="flash-message flash-message--{$flash->type}">{$flash->message}</div>
 	</div>
 
-	{if $user->isLoggedIn()}
-	<header class="admin-header">
-		<a n:href="Admin:default" class="admin-header__brand">Administrace</a>
-		<nav class="admin-header__menu" aria-label="Administrace">
-			<a n:href="Admin:books" n:class="$presenter->isLinkCurrent('Admin:books') ? active"><i class="bi bi-journal-text"></i> Správa knih</a>
-			<a n:href="Admin:import" n:class="in_array($presenter->getAction(), ['import', 'importResult'], true) ? active"><i class="bi bi-upload"></i> Import knih</a>
-		</nav>
-		<nav class="admin-header__nav">
-			<a n:href="Home:default"><i class="bi bi-box-arrow-up-right"></i> Veřejná část</a>
-			<span class="admin-header__user"><i class="bi bi-person-circle"></i> {$user->getId()}</span>
-			<a n:href="Admin:logout"><i class="bi bi-box-arrow-right"></i> Odhlásit se</a>
-		</nav>
+	<header class="site-header">
+		<div class="site-header__inner">
+			<a n:href="Admin:books" class="site-logo">
+				<img src="{$basePath}/assets/images/logo.svg" alt="Shelfie" width="40" height="40">
+				<span>Administrace</span>
+			</a>
+
+			{if $user->isLoggedIn()}
+			{* Account menu for phones; on larger screens the links are shown directly in .site-auth. *}
+			<details class="account-menu js__account-menu">
+				<summary class="account-menu__avatar" aria-label="Účet {$user->getId()}">{$user->getId()|substr:0,1|upper}</summary>
+				<div class="account-menu__panel">
+					<span class="account-menu__user"><i class="bi bi-person-circle"></i> {$user->getId()}</span>
+					<a n:href="Home:default"><i class="bi bi-box-arrow-up-right"></i> Veřejná část</a>
+					<a n:href="Admin:logout" class="account-menu__logout"><i class="bi bi-box-arrow-right"></i> Odhlásit se</a>
+				</div>
+			</details>
+
+			<nav class="site-nav" aria-label="Administrace">
+				<a n:href="Admin:books" n:class="site-nav__link, $presenter->isLinkCurrent('Admin:books') ? active"><i class="bi bi-journal-text"></i> Správa knih</a>
+				<a n:href="Admin:import" n:class="site-nav__link, in_array($presenter->getAction(), ['import', 'importResult'], true) ? active"><i class="bi bi-upload"></i> Import knih</a>
+			</nav>
+
+			<div class="site-auth site-auth--desktop">
+				<a n:href="Home:default" class="site-nav__link"><i class="bi bi-box-arrow-up-right"></i> Veřejná část</a>
+				<span class="site-auth__user"><i class="bi bi-person-circle"></i> {$user->getId()}</span>
+				<a n:href="Admin:logout" class="site-auth__register"><i class="bi bi-box-arrow-right"></i> Odhlásit se</a>
+			</div>
+			{/if}
+		</div>
 	</header>
-	{/if}
 
 	<main class="admin-content">
 		{include content}

@@ -75,9 +75,9 @@
         </div>
     </div>
 
-    <div class="book-form__actions">
-        <button n:name="send" class="btn-reserve"><i class="bi bi-check-lg"></i> {$form['send']->getCaption()}</button>
+    <div class="book-form__actions book-form__actions--end">
         <a n:href="Admin:books" class="btn-secondary">Zrušit</a>
+        <button n:name="send" class="btn-reserve"><i class="bi bi-check-lg"></i> {$form['send']->getCaption()}</button>
     </div>
 </form>
 {/block}

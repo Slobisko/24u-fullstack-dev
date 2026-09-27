@@ -1,52 +1,6 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
-.admin-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: .9rem 2rem;
-    background: $color-white;
-    border-bottom: 1px solid $color-border;
-
-    a {
-        color: $color-text-secondary;
-        text-decoration: none;
-
-        &:hover,
-        &:focus-visible {
-            color: $color-primary;
-        }
-    }
-
-    @media (max-width: $breakpoint-tablet) {
-        padding: .9rem 1rem;
-    }
-}
-
-.admin-header__brand {
-    font-weight: 700;
-    font-size: 1.1rem;
-
-    .admin-header & {
-        color: $color-text;
-    }
-}
-
-.admin-header__nav {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1.25rem;
-    font-size: .95rem;
-}
-
-.admin-header__user {
-    color: $color-muted;
-}
-
 .admin-content {
     max-width: 1200px;
     margin: 2rem auto;
@@ -54,9 +8,11 @@
     background: $color-white;
     border: 1px solid $color-border;
     border-radius: $radius-md;
+    box-shadow: 0 10px 30px rgba($color-header, .06);
 
     h1 {
         margin-top: 0;
+        font-family: $font-serif;
     }
 
     @media (max-width: $breakpoint-tablet) {
@@ -144,25 +100,6 @@
 
 .admin-form__submit {
     justify-content: center;
-}
-
-.admin-header__menu {
-    display: flex;
-    flex: 1;
-    flex-wrap: wrap;
-    gap: .25rem;
-
-    a {
-        padding: .4rem .75rem;
-        border-radius: $radius-sm;
-        font-weight: 600;
-        font-size: .95rem;
-
-        &.active {
-            background: $color-primary-tint;
-            color: $color-primary;
-        }
-    }
 }
 
 .admin-page-header {
@@ -341,7 +278,10 @@
 
     @media (max-width: $breakpoint-tablet) {
         order: -1;
+        justify-self: center;
+        width: 100%;
         max-width: 220px;
+        text-align: center;
     }
 }
 
@@ -393,6 +333,10 @@
     gap: .75rem;
     padding-top: 1rem;
     border-top: 1px solid $color-border-light;
+
+    &--end {
+        justify-content: flex-end;
+    }
 }
 
 .admin-search {

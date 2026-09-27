@@ -1,0 +1,231 @@
+@use 'variables' as *;
+
+.site-header {
+    background: $color-header;
+    color: $color-header-text;
+    border-bottom: 4px solid $color-brand-sand;
+}
+
+.site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: .75rem 2rem;
+
+    @media (max-width: $breakpoint-tablet) {
+        flex-wrap: wrap;
+        gap: .75rem 1rem;
+        padding: .75rem 1rem;
+    }
+}
+
+.site-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    color: $color-header-text;
+    font-family: $font-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: .01em;
+    text-decoration: none;
+
+    img {
+        display: block;
+    }
+}
+
+.site-nav {
+    display: flex;
+    flex: 1;
+    gap: .25rem;
+
+    @media (max-width: $breakpoint-tablet) {
+        order: 3;
+        flex-basis: 100%;
+        overflow-x: auto;
+    }
+}
+
+.site-nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .5rem .85rem;
+    background: none;
+    border: none;
+    border-radius: $radius-sm;
+    color: rgba($color-header-text, .8);
+    font: inherit;
+    font-weight: 500;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .15s ease, color .15s ease;
+
+    &:hover,
+    &:focus-visible {
+        background: rgba($color-header-text, .1);
+        color: $color-header-text;
+    }
+
+    &.active {
+        background: rgba($color-brand-sand, .18);
+        color: $color-brand-sand;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-brand-sand;
+        outline-offset: 1px;
+    }
+}
+
+.site-auth {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-left: auto;
+
+    button,
+    a.site-auth__register,
+    a.site-auth__login {
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        padding: .5rem 1rem;
+        border-radius: $radius-md;
+        font: inherit;
+        font-weight: 600;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: background-color .15s ease, border-color .15s ease;
+        text-decoration: none;
+
+        &:focus-visible {
+            outline: 2px solid $color-brand-sand;
+            outline-offset: 2px;
+        }
+    }
+}
+
+.site-auth__register {
+    background: transparent;
+    border: 1px solid rgba($color-header-text, .4);
+    color: $color-header-text;
+
+    &:hover {
+        border-color: $color-header-text;
+        background: rgba($color-header-text, .08);
+    }
+}
+
+.site-auth__login {
+    background: $color-brand-sand;
+    border: 1px solid $color-brand-sand;
+    color: $color-header;
+
+    &:hover {
+        background: $color-brand-sand-hover;
+        border-color: $color-brand-sand-hover;
+    }
+}
+
+.site-auth__user {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: 0 .5rem;
+    color: rgba($color-header-text, .7);
+    white-space: nowrap;
+}
+
+.site-auth--desktop {
+    @media (max-width: $breakpoint-tablet) {
+        display: none;
+    }
+}
+
+// Avatar with a dropdown, used instead of .site-auth--desktop on phones.
+.account-menu {
+    display: none;
+    position: relative;
+    margin-left: auto;
+
+    @media (max-width: $breakpoint-tablet) {
+        display: block;
+    }
+}
+
+.account-menu__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    background: $color-brand-sand;
+    color: $color-header;
+    font-weight: 700;
+    list-style: none;
+    cursor: pointer;
+
+    &::-webkit-details-marker {
+        display: none;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-header-text;
+        outline-offset: 2px;
+    }
+
+    .account-menu[open] & {
+        box-shadow: 0 0 0 3px rgba($color-brand-sand, .35);
+    }
+}
+
+.account-menu__panel {
+    position: absolute;
+    top: calc(100% + .5rem);
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    padding: .4rem;
+    background: $color-white;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    box-shadow: 0 12px 30px rgba($color-header, .18);
+
+    a {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        padding: .6rem .75rem;
+        border-radius: $radius-sm;
+        color: $color-text;
+        text-decoration: none;
+
+        &:hover,
+        &:focus-visible {
+            background: $color-bg;
+        }
+    }
+}
+
+.account-menu__user {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem .75rem .6rem;
+    margin-bottom: .25rem;
+    border-bottom: 1px solid $color-border-light;
+    color: $color-muted;
+    font-size: .9rem;
+}
+
+.account-menu__panel .account-menu__logout {
+    color: $color-error-text;
+}

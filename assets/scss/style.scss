@@ -1,5 +1,7 @@
 @use 'base';
+@use 'site-header';
 @use 'side-menu';
+@use 'category-drawer';
 @use 'book-grid';
 @use 'book-detail';
 @use 'tabs';

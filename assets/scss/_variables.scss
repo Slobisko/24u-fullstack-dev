@@ -4,17 +4,25 @@ $color-text-secondary: #4d5560;
 $color-text-body: #37404b;
 $color-muted: #6b7280;
 $color-muted-light: #9aa1ab;
-$color-bg: #f5f6f8;
+$color-bg: #f5efe4;
 $color-white: #fff;
-$color-border: #dfe3e8;
-$color-border-light: #eef0f3;
-$color-placeholder-icon: #b7bcc4;
-$color-comment-bg: #fafbfc;
+$color-border: #e5dccc;
+$color-border-light: #f1ebe0;
+$color-placeholder-icon: #c4b8a4;
+$color-comment-bg: #fcfaf6;
 
-$color-primary: #245b8f;
-$color-primary-hover: #1c4972;
-$color-primary-tint: #eaf1f8;
-$color-primary-tint-hover: #dbe8f4;
+$color-primary: #2c5f6f;
+$color-primary-hover: #214957;
+$color-primary-tint: #e5eff0;
+$color-primary-tint-hover: #d3e4e6;
+
+// Brand (colors of the book spines in the logo)
+$color-header: #1f2d36;
+$color-header-text: #f5efe4;
+$color-brand-terracotta: #e07a5f;
+$color-brand-sage: #81b29a;
+$color-brand-sand: #f2cc8f;
+$color-brand-sand-hover: #eab96a;
 
 $color-gold: #f5b301;
 $color-gold-tint: #fff7e0;

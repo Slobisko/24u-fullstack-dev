@@ -1,0 +1,117 @@
+@use 'variables' as *;
+
+// On phones the category menu becomes a drawer sliding in from the left.
+// On larger screens the toggle, close button and backdrop are hidden and the menu stays in the sidebar.
+
+.category-toggle,
+.category-drawer__close,
+.category-backdrop {
+    display: none;
+}
+
+@media (max-width: $breakpoint-tablet) {
+    .category-toggle {
+        position: fixed;
+        top: 30%;
+        left: 0;
+        z-index: 900;
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        padding: .5rem .9rem;
+        background: $color-brand-sand;
+        border: none;
+        border-radius: 0 0 $radius-md $radius-md;
+        box-shadow: 0 6px 18px rgba($color-header, .2);
+        color: $color-header;
+        font: inherit;
+        font-weight: 600;
+        font-size: .9rem;
+        white-space: nowrap;
+        transform-origin: top left;
+        transform: rotate(-90deg) translateX(-50%);
+        cursor: pointer;
+
+        .category-toggle__icon {
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+
+        &:hover {
+            background: $color-brand-sand-hover;
+        }
+
+        &:focus-visible {
+            outline: 2px solid $color-header;
+            outline-offset: 2px;
+        }
+    }
+
+    .category-drawer {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1100;
+        width: min(85vw, 320px);
+        overflow-y: auto;
+        background: $color-white;
+        box-shadow: 0 0 40px rgba($color-header, .3);
+        transform: translateX(-100%);
+        visibility: hidden;
+        transition: transform .25s ease, visibility .25s;
+
+        &.is-open {
+            transform: translateX(0);
+            visibility: visible;
+        }
+
+        .side-menu {
+            min-height: 100%;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            padding-top: 1.5rem;
+        }
+    }
+
+    .category-drawer__close {
+        position: absolute;
+        top: 1rem;
+        right: .75rem;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        background: $color-bg;
+        border: none;
+        border-radius: 50%;
+        color: $color-text;
+        font-size: 1rem;
+        cursor: pointer;
+
+        &:hover,
+        &:focus-visible {
+            background: $color-border;
+        }
+    }
+
+    .category-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 1050;
+        display: block;
+        background: rgba($color-header, .45);
+
+        &[hidden] {
+            display: none;
+        }
+    }
+
+    body.is-category-drawer-open {
+        overflow: hidden;
+    }
+}

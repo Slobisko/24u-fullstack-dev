@@ -123,6 +123,45 @@
     sideMenu.addEventListener('click', handleNavClick);
     content.addEventListener('click', handleNavClick);
 
+    // On phones the categories live in a drawer opened by a button on the left edge.
+    var categoryDrawer = document.querySelector('.js__category-drawer');
+    var categoryToggle = document.querySelector('.js__category-toggle');
+    var categoryBackdrop = document.querySelector('.category-backdrop');
+
+    function setCategoryDrawer(open) {
+        categoryDrawer.classList.toggle('is-open', open);
+        categoryBackdrop.hidden = !open;
+        categoryToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        document.body.classList.toggle('is-category-drawer-open', open);
+    }
+
+    if (categoryDrawer && categoryToggle && categoryBackdrop) {
+        categoryToggle.addEventListener('click', function () {
+            setCategoryDrawer(true);
+            categoryDrawer.querySelector('.js__category-close').focus();
+        });
+
+        document.querySelectorAll('.js__category-close').forEach(function (element) {
+            element.addEventListener('click', function () {
+                setCategoryDrawer(false);
+                categoryToggle.focus();
+            });
+        });
+
+        sideMenu.addEventListener('click', function (event) {
+            if (event.target.closest('a[href]')) {
+                setCategoryDrawer(false);
+            }
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && categoryDrawer.classList.contains('is-open')) {
+                setCategoryDrawer(false);
+                categoryToggle.focus();
+            }
+        });
+    }
+
     window.addEventListener('popstate', function () {
         loadContent(window.location.href, false);
     });

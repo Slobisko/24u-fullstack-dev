@@ -3,7 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>{ifset title}{include title|stripHtml}{else}Evidence knih{/ifset}</title>
+	<title>Shelfie {ifset title} - {include title|stripHtml}{/ifset}</title>
+	<link rel="icon" href="{$basePath}/assets/images/logo.svg" type="image/svg+xml">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 	<link rel="stylesheet" href="{$basePath}/assets/css/style.css">
 	<script defer src="{$basePath}/assets/js/app.js"></script>
@@ -11,8 +12,40 @@
 <body>
 	<div id="flashMessages" class="flash-container" aria-live="polite"></div>
 
+	<header class="site-header">
+		<div class="site-header__inner">
+			<a n:href="Home:default" class="site-logo">
+				<img src="{$basePath}/assets/images/logo.svg" alt="" width="40" height="40">
+				<span>Shelfie</span>
+			</a>
+
+			<nav class="site-nav" aria-label="Hlavní menu">
+				<button type="button" class="site-nav__link">Novinky</button>
+				<button type="button" class="site-nav__link">Bestsellery</button>
+				<button type="button" class="site-nav__link">Autoři</button>
+				<button type="button" class="site-nav__link">Akce</button>
+				<button type="button" class="site-nav__link">O nás</button>
+			</nav>
+
+			<div class="site-auth">
+				<button type="button" class="site-auth__register">Registrovat</button>
+				<button type="button" class="site-auth__login"><i class="bi bi-person"></i> Přihlásit se</button>
+			</div>
+		</div>
+	</header>
+
+	<button type="button" class="category-toggle js__category-toggle" aria-controls="categoryDrawer" aria-expanded="false">
+		{* Three vertical bars: the tab is rotated by -90°, so they are shown as a horizontal hamburger icon. *}
+		<svg class="category-toggle__icon" viewBox="0 0 16 16" aria-hidden="true">
+			<path d="M3 2v12M8 2v12M13 2v12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+		</svg>
+		Kategorie
+	</button>
+	<div class="category-backdrop js__category-close" hidden></div>
+
 	<div class="page-shell">
-		<aside>
+		<aside id="categoryDrawer" class="category-drawer js__category-drawer">
+			<button type="button" class="category-drawer__close js__category-close" aria-label="Zavřít kategorie"><i class="bi bi-x-lg"></i></button>
 			{include sideMenu.latte}
 		</aside>
 		<main class="page-content">

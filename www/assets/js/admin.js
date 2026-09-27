@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     initFlashMessages();
+    initAccountMenu();
     initCoverPreview();
     initFileName();
     initBookSearch();
@@ -17,6 +18,27 @@ function initFileName() {
     fileInput.addEventListener('change', function () {
         if (fileInput.files[0]) {
             fileName.textContent = 'Vybráno: ' + fileInput.files[0].name;
+        }
+    });
+}
+
+function initAccountMenu() {
+    var menu = document.querySelector('.js__account-menu');
+
+    if (!menu) {
+        return;
+    }
+
+    document.addEventListener('click', function (event) {
+        if (menu.open && !menu.contains(event.target)) {
+            menu.open = false;
+        }
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && menu.open) {
+            menu.open = false;
+            menu.querySelector('summary').focus();
         }
     });
 }

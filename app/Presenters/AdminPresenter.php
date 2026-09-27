@@ -50,7 +50,7 @@ final class AdminPresenter extends Presenter
         }
 
         if ($this->getUser()->isLoggedIn() && $isLoginPage) {
-            $this->redirect('Admin:default');
+            $this->redirect('Admin:books');
         }
     }
 
@@ -260,6 +260,6 @@ final class AdminPresenter extends Presenter
         }
 
         $this->restoreRequest((string) $this->getParameter('backlink'));
-        $this->redirect('Admin:default');
+        $this->redirect('Admin:books');
     }
 }
