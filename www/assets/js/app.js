@@ -57,14 +57,18 @@
     function filterBooks(query) {
         var normalized = query.trim().toLowerCase();
         var cards = content.querySelectorAll('.book-card');
+        var printRows = content.querySelectorAll('.print-table tbody tr');
         var visible = 0;
 
-        cards.forEach(function (card) {
+        cards.forEach(function (card, index) {
             var title = card.querySelector('.book-card__title').textContent.toLowerCase();
             var author = (card.dataset.authors || card.querySelector('.book-card__author').textContent).toLowerCase();
             var matches = title.includes(normalized) || author.includes(normalized);
 
             card.hidden = !matches;
+            if (printRows[index]) {
+                printRows[index].hidden = !matches;
+            }
             if (matches) {
                 visible++;
             }
@@ -73,6 +77,17 @@
         var counter = content.querySelector('#bookCount');
         if (counter) {
             counter.textContent = visible;
+        }
+
+        var printCount = content.querySelector('#printCount');
+        if (printCount) {
+            printCount.textContent = visible;
+        }
+
+        var printQuery = content.querySelector('#printQuery');
+        if (printQuery) {
+            printQuery.hidden = normalized === '';
+            printQuery.querySelector('span').textContent = query.trim();
         }
 
         var emptyState = content.querySelector('#bookEmptyState');
@@ -84,6 +99,12 @@
     content.addEventListener('input', function (event) {
         if (event.target.id === 'bookSearch') {
             filterBooks(event.target.value);
+        }
+    });
+
+    content.addEventListener('click', function (event) {
+        if (event.target.closest('.js__print')) {
+            window.print();
         }
     });
 

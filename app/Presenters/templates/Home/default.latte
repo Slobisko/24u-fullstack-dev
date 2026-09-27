@@ -1,7 +1,11 @@
 {define title}{if $activeCategory}{$activeCategory->name}{else}Knihy{/if}{/define}
 
 {block content}
-<h1>{if $activeCategory}{$activeCategory->name}{else}Všechny knihy{/if}</h1>
+<div class="book-list-header">
+    <h1>{if $activeCategory}{$activeCategory->name}{else}Všechny knihy{/if}</h1>
+
+    <button n:if="!$categoryNotFound && count($books)" type="button" class="btn-secondary btn-print js__print"><i class="bi bi-printer"></i> Vytisknout seznam</button>
+</div>
 
 {if $categoryNotFound}
     <p>Kategorie nebyla nalezena.</p>
@@ -14,6 +18,14 @@
         <input type="search" id="bookSearch" placeholder="Hledat podle názvu nebo autora…" aria-label="Hledat knihy">
     </div>
     <p class="book-count">Zobrazeno <strong id="bookCount">{count($books)}</strong> knih</p>
+</div>
+
+<div class="print-only print-meta">
+    <span>Seznam knih<span id="printQuery" hidden> · Hledání: „<span></span>“</span></span>
+    <span class="print-meta__right">
+        <span>Počet knih: <strong id="printCount">{count($books)}</strong></span>
+        <span>Vytištěno: {=date('j. n. Y')}</span>
+    </span>
 </div>
 
 <div class="book-grid">
@@ -44,5 +56,28 @@
     {/foreach}
 </div>
 <p id="bookEmptyState" class="book-empty" hidden>Žádná kniha neodpovídá hledání.</p>
+
+<table class="print-only print-table">
+    <thead>
+        <tr>
+            <th>Název</th>
+            <th>Autoři</th>
+            <th>Rok vydání</th>
+            <th>Kategorie</th>
+            <th>ISBN</th>
+            <th>Hodnocení</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr n:foreach="$books as $book">
+            <td>{$book->title}</td>
+            <td>{foreach $book->related('authors')->order('sort_order, id') as $author}{$author->name}{sep}, {/sep}{/foreach}</td>
+            <td>{$book->published_year}</td>
+            <td>{$book->category?->name}</td>
+            <td class="print-table__nowrap">{$book->isbn ?? '–'}</td>
+            <td class="print-table__nowrap">{if $book->rating !== null}{$book->rating|number:1} ({$book->ratings_count}){else}–{/if}</td>
+        </tr>
+    </tbody>
+</table>
 {/if}
 {/block}

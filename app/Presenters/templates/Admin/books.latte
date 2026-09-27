@@ -65,7 +65,6 @@
 </div>
 {/block}
 
-{* Column header; clickable for sorting only when the column is listed in AdminPresenter::BookSortColumns. *}
 {define sortableHeader, string $key, string $label, ?string $class = null}
 {if in_array($key, $sortableColumns, true)}
     {var $isActive = $sort === $key}

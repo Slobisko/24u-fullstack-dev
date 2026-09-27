@@ -1,0 +1,103 @@
+@use 'variables' as *;
+
+// Elements rendered only for printing
+.print-only {
+    display: none;
+}
+
+.btn-print {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+@media print {
+    @page {
+        margin: 15mm;
+    }
+
+    :root,
+    body {
+        background: $color-white;
+        font-size: 10pt;
+    }
+
+    .page-shell > aside,
+    .book-toolbar,
+    .btn-print,
+    .book-grid,
+    .flash-container,
+    .book-detail__back {
+        display: none !important;
+    }
+
+    .page-shell {
+        display: block;
+        max-width: none;
+        padding: 0;
+    }
+
+    .page-content {
+        padding: 0;
+        border: none;
+
+        h1 {
+            margin-bottom: .25rem;
+            font-size: 18pt;
+        }
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    table.print-only {
+        display: table;
+    }
+
+    .print-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin: 0 0 1rem;
+        color: $color-text-secondary;
+    }
+
+    .print-meta__right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .print-table {
+        width: 100%;
+        border-collapse: collapse;
+
+        thead {
+            // Repeat the header row on every printed page.
+            display: table-header-group;
+        }
+
+        tr {
+            break-inside: avoid;
+        }
+
+        th,
+        td {
+            padding: 4pt 6pt;
+            text-align: left;
+            vertical-align: top;
+            border-bottom: 1px solid $color-border;
+        }
+
+        th {
+            border-bottom: 2px solid $color-text;
+            white-space: nowrap;
+            font-weight: 700;
+        }
+    }
+
+    .print-table__nowrap {
+        white-space: nowrap;
+    }
+}

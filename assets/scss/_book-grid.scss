@@ -155,3 +155,16 @@
         color: $color-gold;
     }
 }
+
+.book-list-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    h1 {
+        margin-bottom: 0;
+    }
+}
