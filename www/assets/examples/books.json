@@ -1,0 +1,20 @@
+[
+    {
+        "title": "Válka s mloky",
+        "short_name": null,
+        "authors": ["Karel Čapek"],
+        "category": "fantasy-a-sci-fi",
+        "published_year": 2019,
+        "isbn": "978-80-7390-812-4",
+        "annotation": "Satirický román o objevu inteligentních mloků, kteří se z levné pracovní síly postupně stanou hrozbou pro celé lidstvo."
+    },
+    {
+        "title": "Saturnin",
+        "short_name": null,
+        "authors": ["Zdeněk Jirotka"],
+        "category": "romany-a-povidky",
+        "published_year": 2016,
+        "isbn": null,
+        "annotation": "Humoristický román o svérázném sluhovi Saturninovi a jeho pánovi, kteří spolu prožijí nezapomenutelné léto."
+    }
+]

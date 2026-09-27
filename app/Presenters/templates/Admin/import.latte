@@ -2,5 +2,58 @@
 
 {block content}
 <h1>Import knih</h1>
-<p>Zatím nic.</p>
+<p class="admin-lead">Nahrajte soubor JSON se seznamem knih. Platné knihy se přidají, chybné a již existující se přeskočí a uvidíte je ve výsledku importu.</p>
+
+<form n:name="importForm" class="admin-form import-form">
+    <ul n:ifcontent class="admin-form__errors" role="alert">
+        <li n:foreach="$form->getOwnErrors() as $error">{$error}</li>
+    </ul>
+
+    <div class="admin-form__field">
+        <span class="admin-form__label">Soubor JSON <span class="admin-form__required">*</span></span>
+        <div class="import-form__file">
+            <label class="btn-secondary book-form__upload">
+                <i class="bi bi-filetype-json"></i> Vybrat soubor
+                <input n:name="file" class="js__file-input">
+            </label>
+            <span class="admin-form__hint js__file-name">Nevybrán žádný soubor. Nejvýše 2 MB.</span>
+        </div>
+        <p class="admin-form__error" n:ifcontent>{inputError file}</p>
+    </div>
+
+    <div>
+        <button n:name="send" class="btn-reserve"><i class="bi bi-upload"></i> Importovat knihy</button>
+    </div>
+</form>
+
+<section class="import-help">
+    <h2>Formát souboru</h2>
+    <p>Soubor obsahuje pole knih. Každá kniha je objekt s těmito klíči:</p>
+
+    <div class="admin-table-wrap">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Klíč</th>
+                    <th>Povinný</th>
+                    <th>Hodnota</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>title</code></td><td>ano</td><td>Název knihy, nejvýše 255 znaků.</td></tr>
+                <tr><td><code>authors</code></td><td>ano</td><td>Pole jmen autorů, např. <code>["Jo Nesbø"]</code>. Pořadí se zachová.</td></tr>
+                <tr><td><code>published_year</code></td><td>ano</td><td>Rok vydání jako číslo, např. <code>2012</code>.</td></tr>
+                <tr><td><code>short_name</code></td><td>ne</td><td>Krátký název pro kartu knihy, nejvýše 160 znaků.</td></tr>
+                <tr><td><code>category</code></td><td>ne</td><td>Slug podkategorie, např. <code>detektivky-krimi</code>.</td></tr>
+                <tr><td><code>isbn</code></td><td>ne</td><td>Číslice, pomlčky a písmeno X, 10–17 znaků.</td></tr>
+                <tr><td><code>annotation</code></td><td>ne</td><td>Anotace knihy.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p>Nepovinné klíče lze vynechat nebo uvést jako <code>null</code>. Obálky knih můžete po importu doplnit v jejich úpravě.
+        Kniha se přeskočí, pokud už existuje kniha se stejným ISBN, nebo (když ISBN chybí) se stejným názvem a rokem vydání.</p>
+
+    <p><a href="{$basePath}/assets/examples/books.json" download class="btn-small"><i class="bi bi-download"></i> Stáhnout ukázkový soubor</a></p>
+</section>
 {/block}

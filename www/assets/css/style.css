@@ -1168,3 +1168,82 @@ a.btn-small {
 .admin-table .admin-table__num .admin-table__sort {
   flex-direction: row-reverse;
 }
+
+.admin-lead {
+  margin-top: -0.25rem;
+  color: #4d5560;
+}
+
+.admin-content code {
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  background: #f5f6f8;
+  font-size: 0.85em;
+}
+
+.admin-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+.admin-alert i {
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+.admin-alert p {
+  margin: 0;
+}
+.admin-alert--success {
+  background: #e8f5e9;
+  color: #1e7a33;
+}
+.admin-alert--warning {
+  background: #fff7e0;
+  color: #8a6100;
+}
+.admin-alert--error {
+  background: #fdecea;
+  color: #b3212e;
+}
+
+.import-form {
+  max-width: 560px;
+  margin-bottom: 2.5rem;
+}
+
+.import-form__file {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.import-help {
+  padding-top: 1.5rem;
+  border-top: 1px solid #eef0f3;
+}
+.import-help h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+.import-help p {
+  color: #4d5560;
+  font-size: 0.95rem;
+}
+
+.import-result__section {
+  margin-bottom: 2rem;
+}
+.import-result__section h2 {
+  font-size: 1.15rem;
+}
+
+.import-result__reasons {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: #b3212e;
+}

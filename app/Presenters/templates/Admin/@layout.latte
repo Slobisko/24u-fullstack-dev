@@ -19,7 +19,7 @@
 		<a n:href="Admin:default" class="admin-header__brand">Administrace</a>
 		<nav class="admin-header__menu" aria-label="Administrace">
 			<a n:href="Admin:books" n:class="$presenter->isLinkCurrent('Admin:books') ? active"><i class="bi bi-journal-text"></i> Správa knih</a>
-			<a n:href="Admin:import" n:class="$presenter->isLinkCurrent('Admin:import') ? active"><i class="bi bi-upload"></i> Import knih</a>
+			<a n:href="Admin:import" n:class="in_array($presenter->getAction(), ['import', 'importResult'], true) ? active"><i class="bi bi-upload"></i> Import knih</a>
 		</nav>
 		<nav class="admin-header__nav">
 			<a n:href="Home:default"><i class="bi bi-box-arrow-up-right"></i> Veřejná část</a>

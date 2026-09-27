@@ -120,6 +120,26 @@ final class DatabaseManager
         });
     }
 
+    /**
+     * @return array<string, int> subcategory slug => id
+     */
+    public function getSubcategoryIdsBySlug(): array
+    {
+        return $this->getCategories()->where('parent_id IS NOT NULL')->fetchPairs('slug', 'id');
+    }
+
+    /**
+     * A book with the same ISBN (ignoring hyphens), or with the same title and year when no ISBN is given.
+     */
+    public function findDuplicateBook(string $title, int $publishedYear, ?string $isbn): ?ActiveRow
+    {
+        $books = $this->database->table('books');
+
+        return $isbn !== null
+            ? $books->where("REPLACE(isbn, '-', '') = ?", str_replace('-', '', $isbn))->fetch()
+            : $books->where('title = ? AND published_year = ?', $title, $publishedYear)->fetch();
+    }
+
     public function updateBookImage(ActiveRow $book, ?string $imageUrl): void
     {
         $book->update(['image_url' => $imageUrl]);

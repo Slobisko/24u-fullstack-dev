@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Presentation\Admin;
 
 use App\Model\BookImageStorage;
+use App\Model\BookImporter;
+use App\Model\BookImportException;
 use App\Model\DatabaseManager;
 use Nette\Application\Attributes\Requires;
 use Nette\Application\UI\Form;
@@ -15,6 +17,8 @@ use Nette\Security\AuthenticationException;
 final class AdminPresenter extends Presenter
 {
     private const MaxImageSize = 2 * 1024 * 1024;
+
+    private const MaxImportFileSize = 2 * 1024 * 1024;
 
     /**
      * Sortable columns of the books table: column key => SQL expression to order by
@@ -31,7 +35,7 @@ final class AdminPresenter extends Presenter
 
     private ?ActiveRow $book = null;
 
-    public function __construct(private readonly DatabaseManager $databaseManager, private readonly BookImageStorage $bookImageStorage) {
+    public function __construct(private readonly DatabaseManager $databaseManager, private readonly BookImageStorage $bookImageStorage, private readonly BookImporter $bookImporter) {
         parent::__construct();
     }
 
@@ -77,6 +81,17 @@ final class AdminPresenter extends Presenter
             $this->redrawControl('count');
             $this->redrawControl('books');
         }
+    }
+
+    public function actionImportResult(): void
+    {
+        $result = $this->getSession('bookImport')->get('result');
+
+        if ($result === null) {
+            $this->redirect('Admin:import');
+        }
+
+        $this->template->result = $result;
     }
 
     public function actionAdd(): void
@@ -174,6 +189,36 @@ final class AdminPresenter extends Presenter
         $form->onSuccess[] = $this->bookFormSucceeded(...);
 
         return $form;
+    }
+
+    protected function createComponentImportForm(): Form
+    {
+        $form = new Form;
+        $form->addUpload('file', 'Soubor JSON')
+            ->setRequired('Vyberte soubor JSON s knihami.')
+            ->setHtmlAttribute('accept', '.json,application/json')
+            ->addRule($form::MaxFileSize, 'Soubor může mít nejvýše 2 MB.', self::MaxImportFileSize);
+        $form->addSubmit('send', 'Importovat knihy');
+
+        $form->onSuccess[] = $this->importFormSucceeded(...);
+
+        return $form;
+    }
+
+    private function importFormSucceeded(Form $form, \stdClass $values): void
+    {
+        try {
+            $result = $this->bookImporter->import($values->file->getContents());
+        } catch (BookImportException $e) {
+            $form['file']->addError($e->getMessage());
+            return;
+        }
+
+        $result['fileName'] = $values->file->getUntrustedName();
+        $this->getSession('bookImport')->set('result', $result);
+
+        // Redirect so that refreshing the result page does not import the file again.
+        $this->redirect('Admin:importResult');
     }
 
     private function bookFormSucceeded(Form $form, \stdClass $values): void

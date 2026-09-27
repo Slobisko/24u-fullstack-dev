@@ -1,8 +1,25 @@
 document.addEventListener('DOMContentLoaded', function () {
     initFlashMessages();
     initCoverPreview();
+    initFileName();
     initBookSearch();
 });
+
+function initFileName() {
+    var fileInput = document.querySelector('.js__file-input');
+
+    if (!fileInput) {
+        return;
+    }
+
+    var fileName = document.querySelector('.js__file-name');
+
+    fileInput.addEventListener('change', function () {
+        if (fileInput.files[0]) {
+            fileName.textContent = 'Vybráno: ' + fileInput.files[0].name;
+        }
+    });
+}
 
 function initFlashMessages() {
     document.querySelectorAll('.flash-message').forEach(function (flash) {

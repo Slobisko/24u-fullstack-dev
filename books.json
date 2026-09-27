@@ -1,0 +1,186 @@
+[
+    {
+        "title": "1984",
+        "short_name": null,
+        "authors": ["George Orwell"],
+        "category": "svetova-literatura",
+        "published_year": 1949,
+        "isbn": null,
+        "annotation": "Winston Smith žije v totalitním státě Oceánie, kde Velký bratr sleduje každý krok a Ministerstvo pravdy přepisuje dějiny. Jeho tichá vzpoura začíná zápisem do deníku."
+    },
+    {
+        "title": "Malý princ",
+        "short_name": null,
+        "authors": ["Antoine de Saint-Exupéry"],
+        "category": "svetova-literatura",
+        "published_year": 1943,
+        "isbn": null,
+        "annotation": "Pilot ztroskotaný na Sahaře potká malého prince z asteroidu B 612. Poetický příběh o přátelství, lásce a o tom, že správně vidíme jen srdcem."
+    },
+    {
+        "title": "Hobit aneb Cesta tam a zase zpátky",
+        "short_name": "Hobit",
+        "authors": ["J. R. R. Tolkien"],
+        "category": "fantasy-a-sci-fi",
+        "published_year": 1937,
+        "isbn": null,
+        "annotation": "Pohodlný hobit Bilbo Pytlík se nechá čarodějem Gandalfem a třinácti trpaslíky přemluvit k výpravě za pokladem, který střeží drak Šmak."
+    },
+    {
+        "title": "Válka s mloky",
+        "short_name": null,
+        "authors": ["Karel Čapek"],
+        "category": "fantasy-a-sci-fi",
+        "published_year": 1936,
+        "isbn": null,
+        "annotation": "Satirický román o objevu inteligentních mloků, kteří se z levné pracovní síly postupně stanou hrozbou pro celé lidstvo."
+    },
+    {
+        "_comment": "Duplicate: ISBN 978-80-7662-333-0 already exists in the database (Sněhulák)",
+        "title": "Sněhulák",
+        "short_name": null,
+        "authors": ["Jo Nesbø"],
+        "category": "detektivky-krimi",
+        "published_year": 2012,
+        "isbn": "978-80-7662-333-0",
+        "annotation": "Detektiv Harry Hole pátrá po sériovém vrahovi, který na místě činu zanechává sněhuláka."
+    },
+    {
+        "title": "Saturnin",
+        "short_name": null,
+        "authors": ["Zdeněk Jirotka"],
+        "category": "romany-a-povidky",
+        "published_year": 1942,
+        "isbn": null,
+        "annotation": "Humoristický román o svérázném sluhovi Saturninovi, který svému pánovi obrátí poklidný život naruby během nezapomenutelného léta."
+    },
+    {
+        "title": "Osudy dobrého vojáka Švejka za světové války",
+        "short_name": "Osudy dobrého vojáka Švejka",
+        "authors": ["Jaroslav Hašek"],
+        "category": "romany-a-povidky",
+        "published_year": 1923,
+        "isbn": null,
+        "annotation": "Josef Švejk, obchodník se psy a úřední blb, se vydává do první světové války a svou nezdolnou dobromyslností odhaluje absurditu rakousko-uherské armády."
+    },
+    {
+        "title": "Vražda v Orient expresu",
+        "short_name": null,
+        "authors": ["Agatha Christie"],
+        "category": "detektivky-krimi",
+        "published_year": 1934,
+        "isbn": null,
+        "annotation": "Luxusní vlak uvízne ve sněhu a jeden z cestujících je nalezen zavražděný. Hercule Poirot musí najít vraha mezi dvanácti podezřelými."
+    },
+    {
+        "_comment": "Invalid: the authors array is empty",
+        "title": "Proces",
+        "short_name": null,
+        "authors": [],
+        "category": "svetova-literatura",
+        "published_year": 1925,
+        "isbn": null,
+        "annotation": "Josef K. je jednoho rána zatčen, aniž by věděl proč, a marně se snaží proniknout do spletitého a nepřístupného soudního systému."
+    },
+    {
+        "title": "Pes baskervillský",
+        "short_name": null,
+        "authors": ["Arthur Conan Doyle"],
+        "category": "detektivky-krimi",
+        "published_year": 1902,
+        "isbn": null,
+        "annotation": "Sherlock Holmes a doktor Watson vyšetřují smrt sira Charlese Baskervilla, kterou prý způsobil přízračný pes z vřesovišť."
+    },
+    {
+        "title": "To",
+        "short_name": null,
+        "authors": ["Stephen King"],
+        "category": "horory-a-thrillery",
+        "published_year": 1986,
+        "isbn": null,
+        "annotation": "Sedm přátel z městečka Derry se jako dospělí vrací, aby naposledy čelili zlu, které se každých sedmadvacet let probouzí v podobě klauna Pennywise."
+    },
+    {
+        "title": "Nadace",
+        "short_name": null,
+        "authors": ["Isaac Asimov"],
+        "category": "fantasy-a-sci-fi",
+        "published_year": 1951,
+        "isbn": null,
+        "annotation": "Matematik Hari Seldon předpoví pád Galaktického impéria a založí Nadaci, která má zkrátit následující temný věk z třiceti tisíc let na tisíc."
+    },
+    {
+        "title": "Jana Eyrová",
+        "short_name": null,
+        "authors": ["Charlotte Brontë"],
+        "category": "romantika",
+        "published_year": 1847,
+        "isbn": null,
+        "annotation": "Osiřelá Jana se stane vychovatelkou na panství Thornfield a zamiluje se do jeho tajemného majitele pana Rochestera."
+    },
+    {
+        "_comment": "Duplicate: ISBN 978-80-269-1582-9 already exists in the database (Duna)",
+        "title": "Duna",
+        "short_name": null,
+        "authors": ["Frank Herbert"],
+        "category": "fantasy-a-sci-fi",
+        "published_year": 2021,
+        "isbn": "9788026915829",
+        "annotation": "Paul Atreides přichází na pouštní planetu Arrakis, jediný zdroj vzácného koření, a stává se středem boje o moc nad celým vesmírem."
+    },
+    {
+        "title": "Stopařův průvodce po Galaxii",
+        "short_name": null,
+        "authors": ["Douglas Adams"],
+        "category": "fantasy-a-sci-fi",
+        "published_year": 1979,
+        "isbn": null,
+        "annotation": "Arthur Dent přežije zničení Země jen díky svému příteli Fordu Prefectovi, který je ve skutečnosti mimozemšťan a spolupracovník legendárního průvodce."
+    },
+    {
+        "title": "Stručná historie času",
+        "short_name": null,
+        "authors": ["Stephen Hawking"],
+        "category": "naucna-literatura",
+        "published_year": 1988,
+        "isbn": null,
+        "annotation": "Srozumitelný výklad o vzniku vesmíru, velkém třesku, černých dírách a povaze času, napsaný pro čtenáře bez odborných znalostí."
+    },
+    {
+        "_comment": "Invalid: published_year is a string instead of a number",
+        "title": "Ostrov pokladů",
+        "short_name": null,
+        "authors": ["Robert Louis Stevenson"],
+        "category": "romany-a-povidky",
+        "published_year": "1883",
+        "isbn": null,
+        "annotation": "Mladý Jim Hawkins najde mapu pirátského pokladu a vyplouvá na dobrodružnou výpravu, na které se musí utkat s jednonohým Johnem Silverem."
+    },
+    {
+        "title": "Člověk hledá smysl",
+        "short_name": null,
+        "authors": ["Viktor E. Frankl"],
+        "category": "psychologie",
+        "published_year": 1946,
+        "isbn": null,
+        "annotation": "Psychiatr popisuje své zkušenosti z koncentračních táborů a ukazuje, že i v nejtěžších podmínkách může člověk najít smysl života."
+    },
+    {
+        "title": "Bylo nás pět",
+        "short_name": null,
+        "authors": ["Karel Poláček"],
+        "category": "romany-a-povidky",
+        "published_year": 1946,
+        "isbn": null,
+        "annotation": "Petr Bajza vypráví o klukovských dobrodružstvích se svými kamarády v malém městě. Humorný příběh psaný nenapodobitelným dětským jazykem."
+    },
+    {
+        "title": "Dobrá znamení",
+        "short_name": null,
+        "authors": ["Terry Pratchett", "Neil Gaiman"],
+        "category": "fantasy-a-sci-fi",
+        "published_year": 1990,
+        "isbn": null,
+        "annotation": "Anděl Azirafal a démon Krowley si na Zemi zvykli tak dobře, že se rozhodnou zabránit blížícímu se konci světa."
+    }
+]

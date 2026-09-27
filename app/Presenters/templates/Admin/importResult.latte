@@ -1,0 +1,82 @@
+{define title}Výsledek importu{/define}
+
+{block content}
+{var $importedCount = count($result['imported'])}
+{var $skippedCount = count($result['skipped'])}
+
+<h1>Výsledek importu</h1>
+<p class="admin-lead">Soubor <strong>{$result['fileName']}</strong> obsahoval {$result['total']} knih.</p>
+
+{if $skippedCount === 0}
+    <div class="admin-alert admin-alert--success" role="status">
+        <i class="bi bi-check-circle-fill"></i>
+        <p>Import proběhl v pořádku. Všech <strong>{$importedCount}</strong> knih bylo přidáno.</p>
+    </div>
+{elseif $importedCount === 0}
+    <div class="admin-alert admin-alert--error" role="alert">
+        <i class="bi bi-x-circle-fill"></i>
+        <p>Nebyla přidána žádná kniha. Všech <strong>{$skippedCount}</strong> knih bylo přeskočeno, důvody najdete níže.</p>
+    </div>
+{else}
+    <div class="admin-alert admin-alert--warning" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <p>Přidáno <strong>{$importedCount}</strong> z {$result['total']} knih. <strong>{$skippedCount}</strong> knih bylo přeskočeno, důvody najdete níže.</p>
+    </div>
+{/if}
+
+<section n:if="$skippedCount" class="import-result__section">
+    <h2>Přeskočené knihy ({$skippedCount})</h2>
+    <div class="admin-table-wrap">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th class="admin-table__num">Pořadí v souboru</th>
+                    <th>Název</th>
+                    <th>Důvod</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr n:foreach="$result['skipped'] as $item">
+                    <td class="admin-table__num">{$item['position']}.</td>
+                    <td>{$item['title'] ?? '(bez názvu)'}</td>
+                    <td>
+                        <ul class="import-result__reasons">
+                            <li n:foreach="$item['reasons'] as $reason">{$reason}</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section n:if="$importedCount" class="import-result__section">
+    <h2>Přidané knihy ({$importedCount})</h2>
+    <p class="admin-form__hint">Obálky knih můžete doplnit v jejich úpravě.</p>
+    <div class="admin-table-wrap">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th class="admin-table__num">Pořadí v souboru</th>
+                    <th>Název</th>
+                    <th class="admin-table__actions">Možnosti</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr n:foreach="$result['imported'] as $item">
+                    <td class="admin-table__num">{$item['position']}.</td>
+                    <td>{$item['title']}</td>
+                    <td class="admin-table__actions">
+                        <a n:href="Admin:edit $item['id']" class="btn-small"><i class="bi bi-pencil"></i> Upravit</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<div class="book-form__actions">
+    <a n:href="Admin:books" class="btn-reserve"><i class="bi bi-journal-text"></i> Přejít na správu knih</a>
+    <a n:href="Admin:import" class="btn-secondary">Importovat další soubor</a>
+</div>
+{/block}
